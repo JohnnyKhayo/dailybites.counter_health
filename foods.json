@@ -1,0 +1,13 @@
+[
+    { "name": "Soda", "calories": 190 },
+    { "name": "Mangoes", "calories": 95 },
+    { "name": "Beef", "calories": 125 },
+    { "name": "Burger", "calories": 244 },
+    { "name": "Fish", "calories": 300 },
+    { "name": "Apples", "calories": 171 },
+    { "name": "Oranges", "calories": 89 },
+    { "name": "Cakes", "calories": 189 },
+    { "name": "Chips", "calories": 311 },
+    { "name": "Pizza", "calories": 189 }
+
+]
