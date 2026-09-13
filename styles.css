@@ -1,0 +1,9 @@
+body {
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    background-image: url("calorie.counter.bg.jpg");
+        background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
