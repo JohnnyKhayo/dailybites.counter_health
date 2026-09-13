@@ -65,3 +65,24 @@ function loadFoods() {
     displayFoods();
     calculateTotalCalories();
 }
+
+
+function addFood(foodName, calories) {
+    const food = {
+        name: foodName,
+        calories: calories
+    };
+    foods.push(food);
+    saveFoods();
+    displayFoods();
+    calculateTotalCalories();
+}
+
+function removeFood(index) {
+    foods.splice(index, 1);
+    saveFoods();
+    displayFoods();
+    calculateTotalCalories();
+}
+
+
