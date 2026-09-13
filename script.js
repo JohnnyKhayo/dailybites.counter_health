@@ -103,3 +103,25 @@ async function fetchFoodData(foodName) {
     }
 }
 
+foodForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const foodName = foodNameInput.value.trim();
+    const calories = Number(caloriesInput.value);
+
+    if (foodName === "") {
+        alert("Please enter a food name.");
+        return;
+    }
+
+    if (calories <= 0) {
+        alert("Please enter a valid calorie amount.");
+        return;
+    }
+
+    addFood(foodName, calories);
+    foodForm.reset();
+    lookupMessage.textContent = "";
+});
+
+
