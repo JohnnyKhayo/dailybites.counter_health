@@ -125,3 +125,28 @@ foodForm.addEventListener("submit", function (event) {
 });
 
 
+resetButton.addEventListener("click", resetCalories);
+
+
+lookupButton.addEventListener("click", async function () {
+    const foodName = foodNameInput.value.trim();
+
+    if (foodName === "") {
+        lookupMessage.textContent = "Please enter a food name first.";
+        return;
+    }
+
+    const food = await fetchFoodData(foodName);
+
+    if (food) {
+        caloriesInput.value = food.calories;
+        lookupMessage.textContent = food.name + " contains approximately " + food.calories + " kcal.";
+    } else {
+        lookupMessage.textContent = "Food not found. Please enter the calories manually.";
+    }
+});
+
+
+loadFoods();
+
+
