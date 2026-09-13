@@ -85,4 +85,21 @@ function removeFood(index) {
     calculateTotalCalories();
 }
 
+async function fetchFoodData(foodName) {
+    try {
+        const response = await fetch("foods.json");
+        if (!response.ok) {
+            throw new Error("Failed to fetch food data.");
+        }
+        const foodData = await response.json();
+        const food = foodData.find(function (item) {
+            return item.name.toLowerCase() === foodName.toLowerCase();
+        });
+
+        return food;
+    } catch (error) {
+        console.error("Error fetching food data:", error);
+        return null;
+    }
+}
 
