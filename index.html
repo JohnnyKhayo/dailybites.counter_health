@@ -2,13 +2,58 @@
 <html lang="en">
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="styles.css">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 
-<body>
+
+<body class="min-h-screen text-stone-800">
+
+    <header class="text-center py-10 px-5">
+        <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Daily Bites Counter</h1>
+        <p class="mt-3 text-stone-600">Log today’s food and watch the calories add up.</p>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-5 pb-12">
+
+        <section class="bg-white/90 rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-xl font-bold text-teal-800 mb-6">Add Food</h2>
+
+            <form id="food-form" class="space-y-5">
+                <label for="food-name" class="block mb-2 font-medium">Food Name</label>
+                <input type="text" id="food-name" name="food-name" placeholder="e.g banana" required class="w-full px-3 py-2 border border-stone-300 rounded-md">
+
+                <label for="calories" class="block mb-2 font-medium">Calories</label>
+                <div class="flex gap-3">
+                    <input type="number" id="calories" name="calories" placeholder="e.g 89" min="0" class="w-full px-3 py-2 border border-stone-300 rounded-md">
+                    <button type="button" id="lookup-btn" class="bg-amber-600 text-white px-4 py-2 rounded-md hover:bg-amber-700">Find Calories</button>
+                </div>
+                <p id="lookup-message" class="text-sm text-stone-500"></p>
+
+                <button type="submit" class="w-full bg-teal-700 text-white font-semibold py-2.5 rounded-md hover:bg-teal-800">Add Food</button>
+            </form>
+
+        </section>
+
+        <section class="bg-white/90 rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-xl font-bold text-teal-800 mb-6">Today's Food</h2>
+            <ul id="food-list" class="space-y-2"></ul>
+        </section>
+
+        <section class="bg-teal-800 text-white rounded-xl shadow-md p-8 text-center">
+
+            <h2 class="text-xl font-bold mb-4">Daily Summary</h2>
+
+            <p>Total Calories: <span id="total-calories">0</span> kcal</p>
+
+            <button type="button" id="reset-btn" class="mt-6 bg-amber-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-amber-600">Reset Day</button>
+
+        </section>
+    </main>
+
 
     <script src="script.js"></script>
 </body>
