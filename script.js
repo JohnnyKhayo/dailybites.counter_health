@@ -1,5 +1,5 @@
-
- const foodForm = document.getElementById("food-form");
+// get the elements from the page
+const foodForm = document.getElementById("food-form");
 const foodNameInput = document.getElementById("food-name");
 const caloriesInput = document.getElementById("calories");
 const foodList = document.getElementById("food-list");
@@ -8,9 +8,10 @@ const resetButton = document.getElementById("reset-btn");
 const lookupButton = document.getElementById("lookup-btn");
 const lookupMessage = document.getElementById("lookup-message");
 
+// store today's food here
 let foods = [];
 
-
+// show the foods on the page
 function displayFoods() {
     foodList.innerHTML = "";
 
@@ -43,6 +44,7 @@ function displayFoods() {
     });
 }
 
+// Add up all calories
 function calculateTotalCalories() {
     let total = 0;
     foods.forEach(function (food) {
@@ -50,13 +52,12 @@ function calculateTotalCalories() {
     });
     totalCalories.textContent = total;
 }
-
-
+// Save the list so it stays after refresh
 function saveFoods() {
     localStorage.setItem("foods", JSON.stringify(foods));
 }
 
-
+// load saved foods when the page opens
 function loadFoods() {
     const savedFoods = localStorage.getItem("foods");
     if (savedFoods) {
@@ -65,8 +66,7 @@ function loadFoods() {
     displayFoods();
     calculateTotalCalories();
 }
-
-
+// Add one food, then save and refresh the screen
 function addFood(foodName, calories) {
     const food = {
         name: foodName,
@@ -78,13 +78,21 @@ function addFood(foodName, calories) {
     calculateTotalCalories();
 }
 
+// Delete one food
 function removeFood(index) {
     foods.splice(index, 1);
     saveFoods();
     displayFoods();
     calculateTotalCalories();
 }
-
+// Clear the whole day
+function resetCalories() {
+    foods = [];
+    localStorage.removeItem("foods");
+    displayFoods();
+    calculateTotalCalories();
+}
+// Look up a food name in foods.json
 async function fetchFoodData(foodName) {
     try {
         const response = await fetch("foods.json");
@@ -95,14 +103,13 @@ async function fetchFoodData(foodName) {
         const food = foodData.find(function (item) {
             return item.name.toLowerCase() === foodName.toLowerCase();
         });
-
         return food;
     } catch (error) {
         console.error("Error fetching food data:", error);
         return null;
     }
 }
-
+// when the form is submitted, add the food
 foodForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -123,11 +130,10 @@ foodForm.addEventListener("submit", function (event) {
     foodForm.reset();
     lookupMessage.textContent = "";
 });
-
-
+// reset button
 resetButton.addEventListener("click", resetCalories);
 
-
+// find calories button
 lookupButton.addEventListener("click", async function () {
     const foodName = foodNameInput.value.trim();
 
@@ -146,7 +152,5 @@ lookupButton.addEventListener("click", async function () {
     }
 });
 
-
+// start the app with anything already saved
 loadFoods();
-
-
