@@ -46,12 +46,12 @@ function displayFoods() {
 
 // Add up all calories
 function calculateTotalCalories() {
-    let total = 0;
-    foods.forEach(function (food) {
-        total += food.calories;
-    });
+    const total = foods.reduce(function (sum, food) {
+        return sum + Number(food.calories);
+    }, 0);
     totalCalories.textContent = total;
 }
+
 // Save the list so it stays after refresh
 function saveFoods() {
     localStorage.setItem("foods", JSON.stringify(foods));
@@ -66,6 +66,7 @@ function loadFoods() {
     displayFoods();
     calculateTotalCalories();
 }
+
 // Add one food, then save and refresh the screen
 function addFood(foodName, calories) {
     const food = {
@@ -97,18 +98,19 @@ async function fetchFoodData(foodName) {
     try {
         const response = await fetch("foods.json");
         if (!response.ok) {
-            throw new Error("Failed to fetch food data.");
+            throw new Error("Could not load foods.json");
         }
         const foodData = await response.json();
         const food = foodData.find(function (item) {
             return item.name.toLowerCase() === foodName.toLowerCase();
         });
-        return food;
+        return { ok: true, food: food || null };
     } catch (error) {
         console.error("Error fetching food data:", error);
-        return null;
+        return { ok: false, food: null };
     }
 }
+
 // when the form is submitted, add the food
 foodForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -130,6 +132,7 @@ foodForm.addEventListener("submit", function (event) {
     foodForm.reset();
     lookupMessage.textContent = "";
 });
+
 // reset button
 resetButton.addEventListener("click", resetCalories);
 
@@ -142,15 +145,21 @@ lookupButton.addEventListener("click", async function () {
         return;
     }
 
-    const food = await fetchFoodData(foodName);
+    const result = await fetchFoodData(foodName);
 
-    if (food) {
-        caloriesInput.value = food.calories;
-        lookupMessage.textContent = food.name + " contains approximately " + food.calories + " kcal.";
+    if (!result.ok) {
+        lookupMessage.textContent = "Lookup failed. Please enter the calories manually.";
+        return;
+    }
+
+    if (result.food) {
+        caloriesInput.value = result.food.calories;
+        lookupMessage.textContent = result.food.name + " contains approximately " + result.food.calories + " kcal.";
     } else {
         lookupMessage.textContent = "Food not found. Please enter the calories manually.";
     }
 });
+
 
 // start the app with anything already saved
 loadFoods();
